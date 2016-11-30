@@ -29,16 +29,23 @@ def update_db():
         for language in data:
             if language not in ['header','SUM']:
                 language_match = "Python"
-                cur.execute('SELECT language, sloc_count, no_files FROM Languages WHERE language=?', (language_match,))    # , means there are other things after this entry
+                cur.execute("SELECT language, sloc_count, no_files FROM Languages WHERE language=?", (language_match,))    # , means there are other things after this entry
                 result = cur.fetchall()
                 # gives back a row's data if something, else empty array
                 print(result)
                 if result: # row in table, just updated
+                    print("Has result")
                     sloc = result[0][1]
                     no_files = result[0][2]
+                    sloc = data["Python"]["code"] + sloc
+                    no_files += data["Python"]["nFiles"]
+                    print("sloc: " + str(sloc))
+                    print("no files: " + str(no_files))
+                    cur.execute("UPDATE Languages SET sloc_count=?, no_files=? WHERE language=?", (sloc, no_files, language_match))
+                    con.commit()    # need this to see changeS!
                 else:   # insert
                 # if in sql table, just update
-                    cur.execute('INSERT INTO Language Values (?,?,?)', (1,2,3))
+                    cur.execute("INSERT INTO Language Values (?,?,?)", ("hope",2,3))
                 # else if not in sql table, create row
 
         print(data)
