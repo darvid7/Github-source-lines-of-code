@@ -1,7 +1,7 @@
 import os
 # exec('ls')
 import subprocess
-# subprocess.call(['bash', 'cloc-git-test.sh', 'https://github.com/darvid7/Life-of-Pi.git'])
+subprocess.call(['bash', 'cloc-git-test.sh', 'https://github.com/PatrickShaw/Test-Cube-JIRA.git'])
 
 import json
 
@@ -28,7 +28,7 @@ def update_db():
         data = json.load(json_data)
         for language in data:
             if language not in ['header','SUM']:
-                language_match = "Python"
+                language_match = "hope"
                 cur.execute("SELECT language, sloc_count, no_files FROM Languages WHERE language=?", (language_match,))    # , means there are other things after this entry
                 result = cur.fetchall()
                 # gives back a row's data if something, else empty array
@@ -45,14 +45,15 @@ def update_db():
                     con.commit()    # need this to see changeS!
                 else:   # insert
                 # if in sql table, just update
-                    cur.execute("INSERT INTO Language Values (?,?,?)", ("hope",2,3))
+                    cur.execute("INSERT INTO Languages Values (?,?,?)", ("hope",2,3))
+                    con.commit()
                 # else if not in sql table, create row
 
         print(data)
         print(data["Python"])
         for thing in data:
             print(thing)
-update_db()
+#update_db()
 
 
 # In computer science and technology, a database cursor is a control structure that enables traversal over the records in a database.

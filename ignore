@@ -2,3 +2,6 @@ bin
 lib
 nodemodules
 virtual
+
+
+ --exclude-list-file=cloc_ignore_files.txt --exclude-ext=.py

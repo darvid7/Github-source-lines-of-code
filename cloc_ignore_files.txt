@@ -1,0 +1,14 @@
+.md
+.txt
+.idea
+.mp4
+.jpg
+.pdf
+.mp3
+
+nodemodules
+.nodemodules
+
+.idea
+virtual
+bootstrap
