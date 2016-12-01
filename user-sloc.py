@@ -79,7 +79,11 @@ def count_user_sloc(username, password, check_owner = False):
     base_url = "https://github.com/"
     cur, con = initalize_db()
     for repo_name in user_repos:
-        if username+"/" == repo_name[0:len(username)+1]:          # only process repos that the user owns
+        check_this = True
+        if check_owner:
+            if not (username+"/" == repo_name[0:len(username)+1]):          # only process repos that the user owns
+                check_this = False
+        if check_this:
             url = base_url + repo_name + ".git"
             run_cloc_script(url)
             update_db(cur, con)
