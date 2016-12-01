@@ -1,0 +1,54 @@
+{"header" : {
+  "cloc_url"           : "github.com/AlDanial/cloc",
+  "cloc_version"       : "1.68",
+  "elapsed_seconds"    : 0.314886093139648,
+  "n_files"            : 25,
+  "n_lines"            : 1223,
+  "files_per_second"   : 79.3937888800722,
+  "lines_per_second"   : 3883.94415201313,
+  "report_file"        : "./data/data.json"},
+"Java" :{
+  "nFiles": 3,
+  "blank": 84,
+  "comment": 82,
+  "code": 337},
+"XML" :{
+  "nFiles": 14,
+  "blank": 25,
+  "comment": 10,
+  "code": 272},
+"Bourne Again Shell" :{
+  "nFiles": 1,
+  "blank": 19,
+  "comment": 20,
+  "code": 121},
+"DOS Batch" :{
+  "nFiles": 1,
+  "blank": 24,
+  "comment": 2,
+  "code": 64},
+"Groovy" :{
+  "nFiles": 3,
+  "blank": 10,
+  "comment": 3,
+  "code": 45},
+"JSON" :{
+  "nFiles": 1,
+  "blank": 0,
+  "comment": 0,
+  "code": 42},
+"Markdown" :{
+  "nFiles": 1,
+  "blank": 13,
+  "comment": 0,
+  "code": 30},
+"Prolog" :{
+  "nFiles": 1,
+  "blank": 3,
+  "comment": 0,
+  "code": 17},
+"SUM": {
+  "blank": 178,
+  "comment": 117,
+  "code": 928,
+  "nFiles": 25} }
