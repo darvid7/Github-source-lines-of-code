@@ -1,4 +1,4 @@
-**Python script to count all sloc for a github user**
+# Python script to count all sloc for a github user
 
 download/clone repo and extract contents
 
@@ -10,7 +10,7 @@ run using $python3 user-sloc [username] [optional: owner]
 
 - owner specifies the script to only look at repos you own
 
-eg:
+eg: $ python3 user-sloc.py darvid7 owner
 
 
 **Requires**
@@ -39,4 +39,4 @@ notes:
 
 -  git clone https://github.com/darvid7/FIT2043.git -q
 
-- ignore node modules, virtual env, flask, etc
+- ignore node modules, virtual env, flask, framework files etc
