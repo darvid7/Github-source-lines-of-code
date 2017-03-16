@@ -47,10 +47,46 @@ optional arguments:
 ```
 192-168-1-2:github-user-all-sloc David$ python3 user-sloc.py darvid7 -o=True -l=True
 Password: 
-  8% (4 of 45) |##########                                                                                                              | Elapsed Time: 0:00:14 ETA: 0:02:33
+ 64% (29 of 45) |############################################################################                                           | Elapsed Time: 0:20:31 ETA: 0:22:42
+Finished processing repositories...
 
-
-
+Language | SLOC | Num Files
+('JavaScript', 743657, 6415)
+('Markdown', 142645, 1244)
+('Python', 139684, 960)
+('JSON', 132866, 1291)
+('XML', 84705, 254)
+('CSS', 39598, 134)
+('HTML', 31157, 264)
+('PHP', 11044, 162)
+('Java', 10349, 233)
+('LESS', 7272, 87)
+('XSLT', 4238, 29)
+('CoffeeScript', 2588, 16)
+('C', 2452, 53)
+('YAML', 2444, 210)
+('XSD', 2208, 6)
+('SASS', 1787, 17)
+('Assembly', 1371, 17)
+('Swift', 962, 37)
+('make', 848, 72)
+('Bourne Again Shell', 365, 3)
+('Groovy', 335, 18)
+('INI', 308, 10)
+('Bourne Shell', 300, 28)
+('DOS Batch', 192, 3)
+('C/C++ Header', 123, 31)
+('ERB', 112, 2)
+('TypeScript', 104, 2)
+('Prolog', 83, 5)
+('C++', 77, 2)
+('Handlebars', 67, 4)
+('Arduino Sketch', 65, 2)
+('Go', 52, 4)
+('C Shell', 17, 1)
+('Ruby', 16, 2)
+('Lisp', 12, 2)
+('PowerShell', 4, 1)
 ```
 
 
@@ -77,6 +113,8 @@ Password:
 - add ignore extension
 
 - nicer formatting of results
+
+- ignore frameworks
 
 notes:
 

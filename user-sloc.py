@@ -1,14 +1,5 @@
-"""
-Python Script to count all Source Lines of Code for a Github user.
+"""Python Script to count all Source Lines of Code for a Github user."""
 
-need cloc-git.sh in the same folder and cloc (count lines of code)
-see http://stackoverflow.com/questions/26881441/can-you-get-the-number-of-lines-of-code-from-a-github-repository
-
-requires:
-- PyGithub library https://github.com/PyGithub/PyGithub
-
-"""
-import sys
 import subprocess
 import getpass
 import sqlite3
@@ -92,7 +83,7 @@ class DatabaseConnection:
         return self.cur.fetchall()
 
 
-def main(check_owner=False):
+def main():
     parser = argparse.ArgumentParser(description="Script to count all source lines of code for a Github user.")
     # Positional arguments (required).
     parser.add_argument("username", type=str,
