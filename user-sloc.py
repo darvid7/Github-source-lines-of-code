@@ -89,12 +89,13 @@ def main():
     parser.add_argument("username", type=str,
                         help="String, Github username")
     # Optional arguments.
-    parser.add_argument("-l", "--sort_by_language", type=bool, help="Sort results by language.", default=False)
+    parser.add_argument("-l", "--sort_by_language", type=bool, help="Boolean, sort results by language.", default=False)
     parser.add_argument("-c", "--count_descending", type=bool,
-                        help="Sort results by SLOC count descending, if False sorts in ascending order.", default=True)
-    parser.add_argument("-o", "--only_owner", type=bool, help="Only check repositories that the user owns.",
+                        help="Booleanm, sort results by SLOC count descending, if False sorts in ascending order.",
+                        default=True)
+    parser.add_argument("-o", "--only_owner", type=bool, help="Boolean, only check repositories that the user owns.",
                         default=False)
-    parser.add_argument("-v", "--verbosity", type=int, default=0, help="Level of verbosity."
+    parser.add_argument("-v", "--verbosity", type=int, default=0, help="Integer, level of verbosity."
                                                                        "\n0: Only show progress bar."
                                                                        "\n1: Print out repository being processed."
                                                                        "\n2: Print every UPDATE and INSERT to db.")

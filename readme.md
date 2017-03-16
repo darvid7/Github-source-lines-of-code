@@ -17,7 +17,7 @@ eg: $ python3 user-sloc.py darvid7 owner
 ## FLags
 
 ```
-192-168-1-2:github-user-all-sloc David$ python3 user-sloc.py -h
+192-168-1-2:github-user-all-sloc David$ python3 user-sloc.py darvid7 -h
 usage: user-sloc.py [-h] [-l SORT_BY_LANGUAGE] [-c COUNT_DESCENDING]
                     [-o ONLY_OWNER] [-v VERBOSITY]
                     username
@@ -30,16 +30,17 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -l SORT_BY_LANGUAGE, --sort_by_language SORT_BY_LANGUAGE
-                        Sort results by language.
+                        Boolean, sort results by language.
   -c COUNT_DESCENDING, --count_descending COUNT_DESCENDING
-                        Sort results by SLOC count descending, if False sorts
-                        in ascending order.
+                        Booleanm, sort results by SLOC count descending, if
+                        False sorts in ascending order.
   -o ONLY_OWNER, --only_owner ONLY_OWNER
-                        Only check repositories that the user owns.
+                        Boolean, only check repositories that the user owns.
   -v VERBOSITY, --verbosity VERBOSITY
-                        Level of verbosity. 0: Only show progress bar. 1:
-                        Print out repository being processed. 2: Print every
-                        UPDATE and INSERT to db.
+                        Integer, level of verbosity. 0: Only show progress
+                        bar. 1: Print out repository being processed. 2: Print
+                        every UPDATE and INSERT to db.
+
 ```
 
 ## Sample output
