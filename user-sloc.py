@@ -138,8 +138,11 @@ def main():
 
 def run_cloc_script(repository_url):
     """Call shell script to clone repo and count Source Lines of Code."""
-    subprocess.call(['bash', SCRIPTS+'cloc-git-test.sh', repository_url])
-
+    # TODO: Catch error: Complex regular subexpression recursion limit (32766) exceeded at /usr/local/bin/cloc line 7272.
+    try:
+    	subprocess.check_output(['bash', SCRIPTS+'cloc-git-test.sh', repository_url])
+    except subprocess.CalledProcessError as e:
+	    print(e)
 
 if __name__ == "__main__":
     main()
