@@ -11,7 +11,17 @@ from github import BadCredentialsException
 
 SCRIPTS = "./scripts/"
 DATAPATH = "./data/"
+class Repository:
+    def __init__(self, github_repository):
+        self.__github_repository = github_repository
 
+    @property
+    def git_url(self):
+        return self.__github_repository.git_url
+
+    @property
+    def full_name(self):
+        return self.__github_repository.full_name
 
 class GithubInstance:
 
@@ -20,7 +30,7 @@ class GithubInstance:
 
     def get_repositories(self):
         """Returns list of Github repositories names of form username/repository_name."""
-        return [repo.full_name for repo in self.instance.get_user().get_repos()]
+        return [Repository(repo) for repo in self.instance.get_user().get_repos()]
 
 
 class DatabaseConnection:
@@ -105,16 +115,15 @@ def main():
     try:
         g = GithubInstance(args.username, password)
         user_repositories = g.get_repositories()
-        base_url = "https://github.com/"
         db = DatabaseConnection(DATAPATH, args.verbosity)
         db.initialize()
         repository_count = 0
         with progressbar.ProgressBar(max_value=len(user_repositories)) as prog_bar:
             for repository in user_repositories:
                 if args.only_owner:
-                    if not (args.username+"/" == repository[0:len(args.username)+1]):
+                    if not (args.username+"/" == repository.full_name[0:len(args.username)+1]):
                         continue  # Only process user owned repositories.
-                url = base_url + repository + ".git"
+                url = repository.git_url
                 if args.verbosity == 1:
                     print("Processing repository: %s", url)
                 run_cloc_script(url)  # Writes data to JSON.
