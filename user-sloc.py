@@ -52,12 +52,12 @@ class LanguageReader:
                     if language in self.__languages:
                         result = self.__languages[language]
                         if self.__operation_verbosity == 2:
-                            print("Updating  %s in db" % language)
+                            print("Updating  %s in language collection" % language)
                         result[1] += data[language_match]["code"]
                         result[2] += data[language_match]["nFiles"]
                     else:
                         if self.__operation_verbosity == 2:
-                            print("Inserting %s into db" % language)
+                            print("Inserting %s into language collection" % language)
                         sloc = data[language_match]["code"]
                         no_files = data[language_match]["nFiles"]
                         self.__languages[language_match] = [language, sloc, no_files]
@@ -81,7 +81,7 @@ def main():
     parser.add_argument("-v", "--verbosity", type=int, default=0, help="Integer, level of verbosity."
                                                                        "\n0: Only show progress bar."
                                                                        "\n1: Print out repository being processed."
-                                                                       "\n2: Print every UPDATE and INSERT to db.")
+                                                                       "\n2: Print every UPDATE and INSERT to language collection.")
     args = parser.parse_args()
     password = getpass.getpass()
 

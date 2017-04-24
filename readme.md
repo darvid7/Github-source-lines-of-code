@@ -1,6 +1,6 @@
 # Python/bash script to count all sloc for a github user
 
-## To Use
+## Usage
 
 download/clone repo and extract contents
 
@@ -101,7 +101,15 @@ Language | SLOC | Num Files
 
 - PyGithub https://github.com/PyGithub/PyGithub
 
-- progressbar lib
+```
+pip install PyGithub
+```
+
+- progressbar lib 
+
+```
+$ pip install progressbar2
+```
 
 **To do:**
 
