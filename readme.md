@@ -102,7 +102,7 @@ Language | SLOC | Num Files
 - PyGithub https://github.com/PyGithub/PyGithub
 
 ```
-pip install PyGithub
+$ pip install PyGithub
 ```
 
 - progressbar lib 
