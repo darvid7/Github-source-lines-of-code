@@ -11,7 +11,17 @@ from github import BadCredentialsException
 
 SCRIPTS = "./scripts/"
 DATAPATH = "./data/"
+class Repository:
+    def __init__(self, github_repository):
+        self.__github_repository = github_repository
 
+    @property
+    def git_url(self):
+        return self.__github_repository.git_url
+
+    @property
+    def full_name(self):
+        return self.__github_repository.full_name
 
 class GithubInstance:
 
@@ -20,67 +30,40 @@ class GithubInstance:
 
     def get_repositories(self):
         """Returns list of Github repositories names of form username/repository_name."""
-        return [repo.full_name for repo in self.instance.get_user().get_repos()]
+        return [Repository(repo) for repo in self.instance.get_user().get_repos()]
 
 
-class DatabaseConnection:
+class LanguageReader:
+    def __init__(self, data_path, operation_verbosity):
+        self.__operation_verbosity = operation_verbosity
+        self.__data_path = data_path
+        self.__languages = dict()
 
-    def __init__(self, data_path, verbosity):
-        self.data_path = data_path
-        self.cur, self.con = self.initialize()
-        self.operation_verbosity = verbosity
+    def get_language(self, filter_language):
+        return self.__languages[filter_language]
 
-    def initialize(self):
-        """Initialize db to have a single table Languages with no entries."""
-        con = sqlite3.connect(self.data_path + "db")
-        cur = con.cursor()
-        cur.execute("DROP TABLE IF EXISTS LANGUAGES")
-        # Can be done with cur.execute without formatting and string contact, but this looks nicer.
-        cur.executescript(
-            """
-            CREATE TABLE LANGUAGES
-            (language TEXT,
-            sloc_count INTEGER,
-            no_files INTEGER,
-            PRIMARY KEY(language))
-            """
-        )
-        return cur, con
-
-    def get_language_from_db(self, language):
-        self.cur.execute("SELECT language, sloc_count, no_files FROM Languages WHERE language=?", (language,))
-        result = self.cur.fetchall()
-        return result
-
-    def update_db(self):
-        """Read JSON shell script writes to and update db."""
-        with open(self.data_path + "data.json") as json_file:
+    def update_languages(self):
+        """Read JSON shell script writes to and update languages array."""
+        with open(self.__data_path + "data.json") as json_file:
             data = json.load(json_file)
             for language in data:
-                if language not in ['header','SUM']:
+                if language not in ['header', 'SUM']:
                     language_match = language
-                    result = self.get_language_from_db(language_match)
-                    if result:
-                        if self.operation_verbosity == 2:
+                    if language in self.__languages:
+                        result = self.__languages[language]
+                        if self.__operation_verbosity == 2:
                             print("Updating  %s in db" % language)
-                        sloc = result[0][1]
-                        no_files = result[0][2]
-                        sloc = data[language_match]["code"] + sloc
-                        no_files += data[language_match]["nFiles"]
-                        self.cur.execute("UPDATE Languages SET sloc_count=?, no_files=? WHERE language=?",
-                                         (sloc, no_files, language_match))
-                        self.con.commit()    # need this to see changeS!
+                        result[1] += data[language_match]["code"]
+                        result[2] += data[language_match]["nFiles"]
                     else:
-                        if self.operation_verbosity == 2:
+                        if self.__operation_verbosity == 2:
                             print("Inserting %s into db" % language)
                         sloc = data[language_match]["code"]
                         no_files = data[language_match]["nFiles"]
-                        self.cur.execute("INSERT INTO Languages Values (?,?,?)", (language_match, sloc, no_files))
-                        self.con.commit()
+                        self.__languages[language_match] = [language, sloc, no_files]
 
     def get_all_languages(self):
-        self.cur.execute("SELECT * FROM Languages")
-        return self.cur.fetchall()
+        return list(self.__languages.values())
 
 
 def main():
@@ -105,24 +88,22 @@ def main():
     try:
         g = GithubInstance(args.username, password)
         user_repositories = g.get_repositories()
-        base_url = "https://github.com/"
-        db = DatabaseConnection(DATAPATH, args.verbosity)
-        db.initialize()
+        language_reader = LanguageReader(DATAPATH, args.verbosity)
         repository_count = 0
         with progressbar.ProgressBar(max_value=len(user_repositories)) as prog_bar:
             for repository in user_repositories:
                 if args.only_owner:
-                    if not (args.username+"/" == repository[0:len(args.username)+1]):
+                    if not (args.username+"/" == repository.full_name[0:len(args.username)+1]):
                         continue  # Only process user owned repositories.
-                url = base_url + repository + ".git"
+                url = repository.git_url
                 if args.verbosity == 1:
                     print("Processing repository: %s", url)
                 run_cloc_script(url)  # Writes data to JSON.
-                db.update_db()  # Update db from JSON file.
+                language_reader.update_languages()  # Update languages from JSON file.
                 repository_count += 1
                 prog_bar.update(repository_count)
         print("Finished processing repositories...")
-        language_tuples = db.get_all_languages()
+        language_tuples = language_reader.get_all_languages()
         if args.sort_by_language:
             language_tuples.sort(key=lambda t:t[0])
         if args.count_descending:
