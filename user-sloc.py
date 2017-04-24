@@ -39,17 +39,17 @@ class LanguageReader:
         self.__data_path = data_path
         self.__languages = []
 
-    def get_language_from_db(self, filter_language):
+    def get_language(self, filter_language):
         return [a_language for a_language in self.__languages if a_language == filter_language]
 
     def update_languages(self):
-        """Read JSON shell script writes to and update db."""
+        """Read JSON shell script writes to and update languages array."""
         with open(self.__data_path + "data.json") as json_file:
             data = json.load(json_file)
             for language in data:
                 if language not in ['header','SUM']:
                     language_match = language
-                    result = self.get_language_from_db(language_match)
+                    result = self.get_language(language_match)
                     if result:
                         if self.__operation_verbosity == 2:
                             print("Updating  %s in db" % language)
@@ -91,7 +91,7 @@ def main():
     try:
         g = GithubInstance(args.username, password)
         user_repositories = g.get_repositories()
-        db = LanguageReader(DATAPATH, args.verbosity)
+        language_reader = LanguageReader(DATAPATH, args.verbosity)
         repository_count = 0
         with progressbar.ProgressBar(max_value=len(user_repositories)) as prog_bar:
             for repository in user_repositories:
@@ -102,11 +102,11 @@ def main():
                 if args.verbosity == 1:
                     print("Processing repository: %s", url)
                 run_cloc_script(url)  # Writes data to JSON.
-                db.update_languages()  # Update db from JSON file.
+                language_reader.update_languages()  # Update db from JSON file.
                 repository_count += 1
                 prog_bar.update(repository_count)
         print("Finished processing repositories...")
-        language_tuples = db.get_all_languages()
+        language_tuples = language_reader.get_all_languages()
         if args.sort_by_language:
             language_tuples.sort(key=lambda t:t[0])
         if args.count_descending:
