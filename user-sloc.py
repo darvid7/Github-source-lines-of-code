@@ -37,36 +37,33 @@ class LanguageReader:
     def __init__(self, data_path, operation_verbosity):
         self.__operation_verbosity = operation_verbosity
         self.__data_path = data_path
-        self.__languages = []
+        self.__languages = dict()
 
     def get_language(self, filter_language):
-        return [a_language for a_language in self.__languages if a_language == filter_language]
+        return self.__languages[filter_language]
 
     def update_languages(self):
         """Read JSON shell script writes to and update languages array."""
         with open(self.__data_path + "data.json") as json_file:
             data = json.load(json_file)
             for language in data:
-                if language not in ['header','SUM']:
+                if language not in ['header', 'SUM']:
                     language_match = language
-                    result = self.get_language(language_match)
-                    if result:
+                    if language in self.__languages:
+                        result = self.__languages[language]
                         if self.__operation_verbosity == 2:
                             print("Updating  %s in db" % language)
-                        sloc = result[0][1]
-                        no_files = result[0][2]
-                        sloc = data[language_match]["code"] + sloc
-                        no_files += data[language_match]["nFiles"]
-                        self.__languages.append((sloc, no_files, language_match))
+                        result[1] += data[language_match]["code"]
+                        result[2] += data[language_match]["nFiles"]
                     else:
                         if self.__operation_verbosity == 2:
                             print("Inserting %s into db" % language)
                         sloc = data[language_match]["code"]
                         no_files = data[language_match]["nFiles"]
-                        self.__languages.append((sloc, no_files, language_match))
+                        self.__languages[language_match] = [language, sloc, no_files]
 
     def get_all_languages(self):
-        return self.__languages
+        return list(self.__languages.values())
 
 
 def main():
@@ -102,7 +99,7 @@ def main():
                 if args.verbosity == 1:
                     print("Processing repository: %s", url)
                 run_cloc_script(url)  # Writes data to JSON.
-                language_reader.update_languages()  # Update db from JSON file.
+                language_reader.update_languages()  # Update languages from JSON file.
                 repository_count += 1
                 prog_bar.update(repository_count)
         print("Finished processing repositories...")
