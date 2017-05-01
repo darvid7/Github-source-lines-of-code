@@ -14,7 +14,7 @@ run using $python3 user-sloc [username]
 
 eg: $ python3 user-sloc.py darvid7 owner
 
-## FLags
+## Flags
 
 ```
 192-168-1-2:github-user-all-sloc David$ python3 user-sloc.py darvid7 -h
