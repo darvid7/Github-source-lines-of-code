@@ -11,6 +11,7 @@ from github import BadCredentialsException
 
 SCRIPTS = "./scripts/"
 DATAPATH = "./data/"
+
 class Repository:
     def __init__(self, github_repository):
         self.__github_repository = github_repository
@@ -74,7 +75,7 @@ def main():
     # Optional arguments.
     parser.add_argument("-l", "--sort_by_language", type=bool, help="Boolean, sort results by language.", default=False)
     parser.add_argument("-c", "--count_descending", type=bool,
-                        help="Booleanm, sort results by SLOC count descending, if False sorts in ascending order.",
+                        help="Boolean, sort results by SLOC count descending, if False sorts in ascending order.",
                         default=True)
     parser.add_argument("-o", "--only_owner", type=bool, help="Boolean, only check repositories that the user owns.",
                         default=False)
@@ -120,6 +121,7 @@ def main():
 def run_cloc_script(repository_url):
     """Call shell script to clone repo and count Source Lines of Code."""
     # TODO: Catch error: Complex regular subexpression recursion limit (32766) exceeded at /usr/local/bin/cloc line 7272.
+    # https://github.com/darvid7/github-source-lines-of-code/issues/3
     try:
     	subprocess.check_output(['bash', SCRIPTS+'cloc-git-test.sh', repository_url])
     except subprocess.CalledProcessError as e:
