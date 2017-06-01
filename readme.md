@@ -32,7 +32,7 @@ optional arguments:
   -l SORT_BY_LANGUAGE, --sort_by_language SORT_BY_LANGUAGE
                         Boolean, sort results by language.
   -c COUNT_DESCENDING, --count_descending COUNT_DESCENDING
-                        Booleanm, sort results by SLOC count descending, if
+                        Boolean, sort results by SLOC count descending, if
                         False sorts in ascending order.
   -o ONLY_OWNER, --only_owner ONLY_OWNER
                         Boolean, only check repositories that the user owns.
