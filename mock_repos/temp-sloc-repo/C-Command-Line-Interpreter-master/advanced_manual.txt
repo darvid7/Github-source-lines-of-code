@@ -1,0 +1,131 @@
+MANUAL(1)     ADVANCED C Command Line Interpreter General Commands Manual     MANUAL(1) 
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                        FIT2070  Operating Systems - Assignment 1                              
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+AUTHOR
+      Name: David Lei
+      Email: dlei7@student.monash.edu
+      Student ID: 26029391
+      Lab: Tuesdays 12 pm 
+
+FUNCTIONS
+
+      1. clear
+
+            Clears the screen using the C standard library 
+
+            Example usage:
+                  clear
+
+      2. cd <directory>
+
+            Changes the working directory to the directory specified. 
+            If no directory is given, it will change the directory to HOME.
+
+            Will also change the PWD variable and print it as it will be the current path.
+
+            Example usage:
+                  cd /FIT2070/Tute_Work/
+                  cd ..
+                  cd /Memes/Dank/Dankest/
+                  cd 
+
+      3. dir <directory> 
+            List the contents of the specified directory. If no directory is given,
+            will list the contents of the current directory.
+
+            Example usage:
+                  dir 
+                  dir ..
+                  dir /Lectures/To_Watch/
+            note: ending '/' doesn't matter, can include or exclude it
+
+      4. echo <comment> 
+
+            Accepts a comment along with the echo command, prints out the comment
+            followed by a new line ("\n").
+            A comment is a string enclosed with quotation marks ("").
+
+            Example usage:
+                  echo "hi" $ hi
+                  echo      $ no comment provided
+                  echo hi   $ invalid format 
+
+      5. help
+
+            Displays the user manual via the less filter using the C standard library
+
+            Example usage:
+                  help
+
+      6. pause
+
+            Pauses execution of the program until the user presses Enter
+
+            Example usage:
+                  pause
+
+      7. quit
+
+            Terminates execution of CLI program
+
+            Example usage:
+                  quit
+
+      8. new <file>
+            Creates a new file with the name file (including extension). 
+            If the file already exists it will print an error message (as we are 
+            assuming we don't want to accidentally overwrite a file).
+            Spaces are allowed
+
+            Example usage:
+                  new apple.py
+                  new abcd
+                  new help_me.txt
+
+      9. cp <old> <new>
+            Checks to see if the old file exists, if so continue, otherwise print error message.
+            The program will copy the contents of the old file into the new file, overwriting the
+            new file if it already exists.
+
+            Example usage:
+                  cp advanced_manual.txt new_copy.txt
+
+      10. find <char> <file>
+            Checks to see if file exists, if not prints error message.
+            If file exists prints the number of times char occurs in that file.
+            This is case sensitive. 
+
+            Example usage:
+                  find a advanced_manual.txt
+
+      11. run <program>
+            Executes program with the name <program>. First it checks if the input <program> begins with a '/'.
+            If so it is assumed the input is the full path to the program. Otherwise it is assumed the program is 
+            in the current working directory. If program doesn't exist, will print appropriate error message. 
+
+            Example usage:
+                  Assuming we are in a directory with the program sleepy
+                  To run sleepy use:
+                        run sleepy
+                  To run a program from /usr/bin e.g. Python use
+                        run /usr/bin/Python
+
+                  Assuming we are in the root directory
+                  To run sleepy use:
+                        run /Users/David/Desktop/FIT2070_C/Assignment_1/Advanced_CLI/Sleepy 
+
+                  Above path will vary depending on machine.
+
+      12. halt <program>
+            Stops execution of a program with name <program>. If the program doesn't exist
+            or could not be killed will print appropriate error message. 
+
+            Example usage:
+                  halt python
+                  halt sleepy
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          END
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
